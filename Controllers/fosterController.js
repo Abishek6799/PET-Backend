@@ -22,8 +22,12 @@ export const createFosterPet = async (req, res) => {
             return res.status(404).json({ message: "Shelter not found" });
         }
 
-        if(pet.status !== "fostered"){
-            return res.status(400).json({ message: "Pet is already approved for adoption" });
+        if (pet.status === "adopted") {
+            return res.status(400).json({ message: "Pet is already adopted and cannot be fostered" });
+        }
+
+        if (pet.status === "fostered") {
+            return res.status(400).json({ message: "Pet is already in foster care" });
         }
 
         const existingFoster = await Foster.findOne({ pet: petId,shelter:shelterId,user:userId });
