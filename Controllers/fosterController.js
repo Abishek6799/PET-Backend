@@ -45,7 +45,7 @@ export const createFosterPet = async (req, res) => {
             description,
             startDate: startDate || Date.now(),
             endDate,
-            status: "active",
+            status: "pending",
         });
         await newFosterProfile.save();
 
@@ -112,24 +112,18 @@ export const getAllFosteredPetsForShelter = async (req, res) => {
 
 export const updateFosterStatus = async (req, res) => {
     const { id } = req.params;
-    const userId = req.user._id; 
+
     try {
        
         const foster = await Foster.findById(id)
             .populate("user", "_id name") 
-            .populate("pet", "_id name")
+            .populate("pet", "_id name status")
             .populate("shelter", "_id name");
 
 
         if (!foster) {
             return res.status(404).json({ message: "Foster record not found" });
         }
-
-   
-        if (foster.user._id.toString() !== userId.toString()) {
-            return res.status(403).json({ message: "Access denied: You do not own this foster record" });
-        }
-
        
         foster.status = req.body.status ?? foster.status; 
         foster.endDate = req.body.endDate ?? foster.endDate;
@@ -150,7 +144,7 @@ export const updateFosterStatus = async (req, res) => {
 };
 
 export const deleteFoster = async (req, res) => {
-    const { id: fosterId } = req.params;
+    const { fosterId } = req.params;
     const userId = req.user._id;
     try {
         const foster = await Foster.findByIdAndDelete(fosterId);

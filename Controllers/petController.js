@@ -169,7 +169,7 @@ export const getPetById = async (req, res) => {
 
 export const updatePet = async (req, res) => {
     const { id } = req.params;
-    const { name, petname, age, breed, size, color,gender, description, location, phoneNumber, medicalHistory, status } = req.body;
+    const { name, petname, age, breed, size, color,gender, description, location, medicalHistory, status } = req.body;
     const shelterId = req.user.shelterId;
     const imageUrl = req.file ? req.file.path : null;
     try {
@@ -199,10 +199,9 @@ export const updatePet = async (req, res) => {
         pet.breed = breed || pet.breed;
         pet.size = size || pet.size;
         pet.color = color || pet.color;
-        gender = gender || pet.gender;
+        pet.gender = gender || pet.gender;
         pet.description = description || pet.description;
         pet.location = location || pet.location;
-        pet.phoneNumber = phoneNumber || pet.phoneNumber;
         pet.medicalHistory = medicalHistory || pet.medicalHistory;
         pet.status = status || pet.status;
         pet.image = imageUrl;

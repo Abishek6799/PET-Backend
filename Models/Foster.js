@@ -52,8 +52,8 @@ const fosterSchema = new mongoose.Schema({
     },
     status: {
       type: String,
-      enum: ["active", "completed", "inactive"],
-      default: "active"  
+      enum: ["active", "completed", "inactive","pending","rejected"],
+      default: "pending"  
     },
     role:{
         type: String,

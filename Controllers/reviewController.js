@@ -34,9 +34,7 @@ export const createPetReview = async (req, res) => {
         if(!shelter) {    
             return res.status(404).json({ message: "Shelter not found" });
         }
-        if(exists) {
-            return res.status(400).json({ message: "You have already reviewed this pet" });
-        }
+       
        
         const mailResponse = await sendMail({
             to: shelter.email,
@@ -55,7 +53,8 @@ export const createPetReview = async (req, res) => {
 };
 
 export const createShelterReview = async (req, res) => {
-    const { petId } = req.params;
+    
+    
     const { shelterId, rating, comment } = req.body;
     const userId = req.user._id;
 
@@ -65,14 +64,14 @@ export const createShelterReview = async (req, res) => {
             return res.status(404).json({ message: "Shelter not found" });
         }
 
-        const exsist = await Review.findOne({ user: userId, shelter: shelterId,pet:petId });
+        const exsist = await Review.findOne({ user: userId, shelter: shelterId});
         if (exsist) {
             return res.status(400).json({ message: "You have already reviewed this shelter" });
         }
 
         const review = new Review({
             user: userId,
-            pet: petId,
+          
             shelter: shelterId,
             rating,
             comment,
@@ -105,7 +104,7 @@ export const getAllPetReviews = async (req, res) => {
             return res.status(404).json({ message: "Pet not found" });
         }
 
-        const reviews = await Review.find({ pet: petId }).populate("user","name");
+        const reviews = await Review.find({ pet: petId  }).populate("user","name");
         res.status(200).json(reviews);
     } catch (error) {
         res.status(500).json({ message: error.message });

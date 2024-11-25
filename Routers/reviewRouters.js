@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/pet/:petId", authMiddleware, createPetReview);
 router.post("/shelter/:petId", authMiddleware, createShelterReview);
 router.get("/pet/:petId",authMiddleware, getAllPetReviews);
-router.get("/shelter/:shelterId/:petId",authMiddleware, getAllShelterReviews);
+router.get("/shelter/:shelterId/",authMiddleware, getAllShelterReviews);
 router.delete("/delete/:reviewId", authMiddleware, deleteReview);
 
 export default router;
