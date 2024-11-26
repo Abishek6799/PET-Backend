@@ -11,6 +11,7 @@ import applicationRouter from "./Routers/applicationRouters.js";
 import reviewRouter from "./Routers/reviewRouters.js";
 import messageRouter from "./Routers/messageRouters.js";
 import appointmentRouter from "./Routers/appointmentRouters.js";
+import favoriteRoutes from "./Routers/favoriteRouters.js"
 
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use("/api/application", applicationRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/appointment", appointmentRouter);
+app.use("/api/favorites" , favoriteRoutes);
 app.use(errorMiddleware);
 
 const port = process.env.PORT || 5000;
